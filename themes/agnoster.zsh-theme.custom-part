@@ -1,0 +1,72 @@
+# Characters
+SEGMENT_SEPARATOR="\ue0b0"
+PLUSMINUS="\u00b1"
+BRANCH="\ue0a0"
+DETACHED="\u27a6"
+CROSS="\u2715"
+LIGHTNING="\u26a1"
+GEAR="\u2699"
+
+
+# Status:
+# - was there an error
+# - am I root
+# - are there background jobs?
+prompt_status() {
+  local -a symbols
+
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}😱"   #✘✕"
+  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
+
+  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+}
+
+
+# Dir: current working directory
+prompt_dev_steve() {
+  # 若在Repositories文件夹内, 根目录显示为DEV
+  # 省略过长目录
+  # number of chracters of the path of the prompt is less 30
+	# use '~' to represent $HOME as long as possible
+  if [[ $PWD =~ $HOME ]]; then
+    pwd="${PWD[@]//$HOME/~}"
+    prefix_slash=
+  else
+    pwd=$PWD
+    prefix_slash=/
+  fi
+
+  # ugly work around
+  # IFS=/ read -A pwdarr <<< "$pwd"
+
+  DEV="~/Desktop/TEST/Repositories"
+  if [[ $pwd =~ $DEV ]]; then
+    pwd="${pwd[@]//$DEV/DEV}"
+  fi
+
+  pwdarr=(${(ps:/:)pwd})
+  if [[ ${#pwd[@]} -le 30 ]]; then
+    prompt="$pwd"
+  else
+    prompt="${pwdarr[1]}/.../${pwdarr[-1]}"
+  fi
+  
+  prompt_segment blue $CURRENT_FG ${prompt}
+}
+
+
+## Main prompt
+build_prompt() {
+  RETVAL=$?
+  prompt_status
+  prompt_virtualenv
+  prompt_aws
+  prompt_context
+  # prompt_dir
+  prompt_dev_steve
+  prompt_git
+  prompt_bzr
+  prompt_hg
+  prompt_end
+}

@@ -30,8 +30,10 @@
 - [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
 
 ## Installation  
-- Clone this repo as `$PATH-TO-OH_MY_ZSH/custom`
-- `source .zshrc`
+> **⚠️Make sure your `$ZSH/custom` doesn't contain your customized files first.**
+> **⚠️The next 2 steps will override your `$ZSH/custom` settings**
+- `git clone https://github.com/Steve-Xyh/.oh-my-zsh-customized $ZSH/custom`
+- `source ~/.zshrc`
 
 ---  
 **by [Steve X](https://github.com/Steve-Xyh/.oh-my-zsh-customized)**  

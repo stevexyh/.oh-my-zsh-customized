@@ -136,6 +136,11 @@ prompt_dir() {
     pwd="${pwd[@]//$DEV/DEV}"
   fi
 
+  SOTON="~/Desktop/Material.localized/Courseware.localized/Soton"
+  if [[ $pwd =~ $SOTON ]]; then
+    pwd="${pwd[@]//$SOTON/Soton}"
+  fi
+
   pwdarr=(${(ps:/:)pwd})
   if [[ ${#pwd[@]} -le 30 ]]; then
     prompt=" $pwd "

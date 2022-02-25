@@ -33,7 +33,7 @@
 > **⚠️Make sure your `$ZSH/custom` doesn't contain your customized files first.**  
 > **⚠️The next 2 steps will override your `$ZSH/custom` settings**  
 
-- `git clone https://github.com/Steve-Xyh/.oh-my-zsh-customized $ZSH/custom`
+- `git clone --recurse-submodules https://github.com/Steve-Xyh/.oh-my-zsh-customized $ZSH/custom`
 - `source ~/.zshrc`
 
 ---  
